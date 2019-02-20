@@ -1,0 +1,46 @@
+ 
+
+If it's not a typed dataset, then you probably want to do something like this, using the Linq-to-DataSet extension methods:
+
+var distinctValues = dsValues.AsEnumerable()
+                        .Select(row => new {
+                            attribute1_name = row.Field<string>("attribute1_name"),
+                            attribute2_name = row.Field<string>("attribute2_name")
+                         })
+                        .Distinct();
+Make sure you have a using System.Data; statement at the beginning of your code in order to enable the Linq-to-Dataset extension methods.
+
+
+DataSet dataSet = new DataSet(); //Create a dataset
+dataSet = _DataEntryDataLayer.ReadResults(); //Call to the dataLayer to return the data
+
+//LINQ query on a DataTable
+var dataList = dataSet.Tables["DataTable"]
+              .AsEnumerable()
+              .Select(i => new
+              {
+                 ID = i["ID"],
+                 Name = i["Name"]
+               }).ToList();
+
+
+You can use condition to check rows exist in addition before casting. System.Linq namespace is required for Any() to work
+
+var rows = values.AsEnumerable().Where
+            (row => row.Field<string>("Status") == action);
+
+if(rows.Any()){
+    DataTable dt = rows.CopyToDataTable<DataRow>();
+ }
+
+
+DataTable selectedTable = tb.AsEnumerable()
+                            .Where(r => r.Field<string>("Modul") == value)
+                            .CopyToDataTable();
+
+
+
+
+var filteredTable = (from n in datatable.AsEnumerable()
+                    where !n.Field<string>("stauscode").Contains("JOB")
+                    select n).CopyToDataTable();
