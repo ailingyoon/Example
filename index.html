@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link type="test/css" href="css/style.css" rel="stylesheet">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
+<script type="text/javascript">
+	$(function(){
+	$("#cors").click(
+		function(){
+			$.ajax({
+				headers:{"token":"","Content-Type":"application/json;charset=UTF-8"},
+				url:"http://***/user-api/user/getUserMall",
+				success:function(data){
+					alert(data.mobile);
+				}
+			})
+		});
+	});
+</script>
+<body>
+	<input type="button" id="cors" value="core跨域测试"
+</body>
+</html>

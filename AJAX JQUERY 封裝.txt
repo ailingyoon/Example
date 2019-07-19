@@ -1,0 +1,9 @@
+对Jquery中的ajax再封装,简化操作
+
+
+对Jquery中的ajax再封装,简化操作
+
+
+https://blog.csdn.net/smartsmile2012/article/details/17041633
+
+https://blog.csdn.net/chelen_jak/article/details/22442329

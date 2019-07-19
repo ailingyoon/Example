@@ -1,0 +1,12 @@
+Possible to access MVC ViewBag object from Javascript file?
+
+Or if it's not a class, your only other alternative, is to use data attributes in your HTML elements, assign them to properties in your View and retrieve them in the JS file.
+
+Assuming you had this input:
+
+<input type="hidden" id="myInput" data-myValue="@ViewBag.MyValue" />
+
+
+Then in your JS file you could get it by using:
+
+var myVal = $("#myInput").data("myValue");

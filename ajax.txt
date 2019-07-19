@@ -1,0 +1,118 @@
+function sendAjax(url, param, datat, callback) {
+    $.ajax({
+        type: "post",
+        url: url,
+        data: param,
+        dataType: datat,
+        success: callback,
+        error: function() {
+            ClosetoastLoading();
+            errorTip();
+        }
+    });
+}
+
+
+
+//post方式：		
+function ispassword() {
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.post("提交的url地址", {
+        "password": password,
+        "username": username
+    },
+    function(result) {
+        if ($.trim(result) == "true") {
+            $("#msg2").html("密码正确");
+        } else {
+            $("#msg2").html("密码错误");
+        }
+    },
+    'text');
+}
+//或者：ajax方式：
+$(function() {
+    $('.login').click(function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            url: "提交的url地址",
+            data: "{username:'" + username + "',password:'" + password + "'}",
+            success: function(result) {
+                if ($.trim(result) == "true") {
+                    $.tooltip('密码正确', 2500, true);
+                } else {
+                    $.tooltip('密码错误');
+                }
+            },
+            "text"
+        })
+    })
+})
+
+
+
+
+
+
+$.ajax({
+    url: "http://1.1.1.1/api/v2/user/inviters", //接口
+    type: "post", //GET或POST
+    data: JSON.stringify({}), //数据
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    //dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+    success: function(msg) {
+        if (msg.data && msg.data.inviters) {
+            addFimg(msg.data.inviters);
+        }
+
+    }, //回调成功方法
+    error: function(xhr, textStatus) {
+        console.log(xhr);
+        console.log(textStatus)
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {　　
+    getlist();
+});
+
+function getlist(id) {
+    $.ajax({
+        type: "post",
+        url: "<{:U('Product/getgoods')}>",
+        data: {
+            'id': id
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+            var goods = '';
+            $.each(data, function(k, v) {
+                goods += '<li >';
+                goods += '<div class="pro-img"><img class="pro-imgs" src="' + v.product_img + '"/></div>';
+                goods += '<p><span class="pro-name"><a href="index.php?m=&c=Product&a=productdetail&id=' + v.id + '">' + v.product_name + '</a></span><br>';
+                goods += '<span class="pro-info"><a href="index.php?m=&c=Product&a=productdetail&id=' + v.id + '">' + v.product_title + '</a></span><br>';
+                goods += '<a href="index.php?m=&c=Product&a=productdetail&id=' + v.id + '" class="btn more-b">更多<span></span></a></p>';
+            });
+            $('.goods').html(goods);
+        }
+    });
+}
